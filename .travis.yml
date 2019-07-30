@@ -3,10 +3,14 @@ install: true
 jdk:
   - openjdk8
 sudo: false
-
+addons:
+  sonarcloud:
+    organization: andrewbessa
+    token:
+      secure: FYgNVMm56P2tyu/xoe+dsBggHejhd4zr6tLPjOJlg9kgAZdeOVFepn6xxjkWSCFQyCinGPsLNi0cUaGNZGDDDYBmHAeNirfuJZ0CcGrQlOqx8YdhXQCLJDgEW5q29l+GrVeRfXTIX+MlxiAjnfqpgcrOm5+Z7mJ1ThG89pBPN/7g/ZRzIHzQwgiIQTBWkFgYHr8AE7hkCXzH7Cfs/Q7wE5vp5JnTvoLrMRFiu+D3nwtlLKbf7jePTIHW98FnQwXuoPAw4bPYmKRHuxXuEbMC00LwxrgQIurjRqxYHyKFL5MJXVByGatzLy3+sVjuuw4/heM0pp2NXo8RJnuf+mpv3AP02DNzAN/p4Hu7ZNaR46m0koHWDYNLFHkXtzgFUHhvkNrjurHcLTJVE8X9HuvboUiIzM69kF6ZxsDd2FzJ+aOrjQ0Mc63aNdnW7HsJu6skCq3eYokiftkWvn0hUrbcp1nrdnPG0zYfZjIsbahSkFA+DtnEQlhmBG1nGaQuylyZYhunmOQwtZ3MYoRInIuOnxXvvtq8wGXZ83ZZdiZE0hl72WTjIKeGqKFwEjGsoWItCYXlN9Ta/GOTSXQ6lZuoO3pGDjWNQVXUbFIHWtlAU1bqnBO5yf4kXSr7uYe8X/j+JZHSQx/2ZqzzRAX6F0zYNAGFbr1W/cU8OrZFsDaHm3E=
 script:
-  - mvn clean test  
-
+- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=andrewbessa_MobEu-Hiring-Java -Dsonar.login=0e50eaea56d22d4a8c0653d4b8cc83cd1d209c24
 cache:
   directories:
-    - '$HOME/.m2/repository' 
+  - "$HOME/.m2/repository"
+  - "$HOME/.sonar/cache"

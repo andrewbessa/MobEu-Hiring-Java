@@ -1,0 +1,64 @@
+.
+├── README.md
+├── documentation
+│   ├── doc.adoc
+│   └── doc.html
+├── pom.xml
+├── src
+│   ├── main
+│   │   └── java
+│   │       └── com
+│   │           └── mobiquityinc
+│   │               ├── exception
+│   │               │   ├── APIException.java
+│   │               │   └── ExceptionMessage.java
+│   │               ├── knapsack
+│   │               │   ├── Knapsack.java
+│   │               │   ├── PacketItem.java
+│   │               │   └── factory
+│   │               │       ├── KnapsackFactory.java
+│   │               │       └── PacketItemFactory.java
+│   │               └── packer
+│   │                   └── Packer.java
+│   └── test
+│       └── java
+│           └── com
+│               └── packer
+│                   ├── PackerTest.java
+│                   ├── knapsack
+│                   │   ├── KnapsackTest.java
+│                   │   └── PacketItemTest.java
+│                   └── util
+│                       └── FileTestUtil.java
+├── target
+│   ├── classes
+│   │   └── com
+│   │       └── mobiquityinc
+│   │           ├── exception
+│   │           │   ├── APIException.class
+│   │           │   └── ExceptionMessage.class
+│   │           ├── knapsack
+│   │           │   ├── Knapsack.class
+│   │           │   ├── PacketItem.class
+│   │           │   └── factory
+│   │           │       ├── KnapsackFactory.class
+│   │           │       └── PacketItemFactory.class
+│   │           └── packer
+│   │               └── Packer.class
+│   └── test-classes
+│       └── com
+│           └── packer
+│               ├── PackerTest.class
+│               ├── knapsack
+│               │   ├── KnapsackTest.class
+│               │   └── PacketItemTest.class
+│               └── util
+│                   └── FileTestUtil.class
+├── test_files
+│   ├── resultFile01.txt
+│   ├── testFile01.txt
+│   ├── testFile01BadFormat.txt
+│   └── testFile02BadFormat.txt
+└── tree.txt
+
+30 directories, 31 files

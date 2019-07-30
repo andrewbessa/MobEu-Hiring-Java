@@ -26,9 +26,7 @@ I considered the explanation of the version of the 0-1 Knapsack algorithm too lo
 
 [Documentation](http://htmlpreview.github.io/?https://github.com/andrewbessa/MobEu-Hiring-Java/blob/master/documentation/doc.html) 0-1 Knapsack
 
-## Architecture overview
-
-#### Project structure
+## Project structure
 
 ```
 ├── README.md

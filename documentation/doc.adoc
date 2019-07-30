@@ -216,5 +216,4 @@ if remaining_capacity is not integer {
 return remaining_capacity
 ```
 
-== Project Structure
 

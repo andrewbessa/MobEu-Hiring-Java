@@ -11,7 +11,7 @@ You want to send your friend a package with different things. Each thing you put
 * id, weight, cost
 * The package has a weight limit.
 
-###Goals
+### Goals
 
 * The total weight is less than or equal to the package limit;
 * The total cost is as large as possible;
@@ -19,7 +19,11 @@ You want to send your friend a package with different things. Each thing you put
 * Max weight that a package can take is ≤ 100
 * There might be up to 15 items you need to choose from
 * Max weight and cost of an item is ≤ 100
-  
+
+### Solution
+
+[Documentation](http://htmlpreview.github.io/?https://github.com/andrewbessa/MobEu-Hiring-Java/blob/master/documentation/doc.html) 
+
 ## Architecture overview
 
 #### Project structure
@@ -28,7 +32,7 @@ You want to send your friend a package with different things. Each thing you put
 ├── README.md
 ├── documentation
 │   ├── doc.adoc
-│   └── doc.html [Documentation](http://htmlpreview.github.io/?https://github.com/andrewbessa/MobEu-Hiring-Java/blob/master/documentation/doc.html) 
+│   └── doc.html 
 ├── pom.xml
 ├── src
 │   ├── main

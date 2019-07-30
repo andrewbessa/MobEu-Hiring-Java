@@ -26,9 +26,9 @@ public class PacketItemFactory {
 
             int itemId = Integer.valueOf(elements[0].trim());
             float itemWeight = Float.valueOf(elements[1].trim());
-            float itemValue = Float.valueOf(elements[2].trim());
+            float itemCost = Float.valueOf(elements[2].trim());
 
-            return new PacketItem(itemId, itemWeight, itemValue);
+            return new PacketItem(itemId, itemWeight, itemCost);
 
         } catch (NumberFormatException e) {
             throw new APIException(ExceptionMessage.BAD_NUMBER_FORMAT.getMessage(), e);

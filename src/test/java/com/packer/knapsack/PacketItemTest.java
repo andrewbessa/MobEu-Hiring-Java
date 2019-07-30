@@ -41,7 +41,7 @@ public class PacketItemTest {
         try {
             new PacketItem(1, (float) 48.77,-79);
         } catch (APIException e) {
-            Assert.assertEquals(ExceptionMessage.ITEM_VALUE.getMessage(), e.getMessage());
+            Assert.assertEquals(ExceptionMessage.ITEM_COST.getMessage(), e.getMessage());
         }
     }
 
@@ -50,7 +50,7 @@ public class PacketItemTest {
         try {
             new PacketItem(1, (float) 48.77,-79);
         } catch (APIException e) {
-            Assert.assertEquals(ExceptionMessage.ITEM_VALUE.getMessage(), e.getMessage());
+            Assert.assertEquals(ExceptionMessage.ITEM_COST.getMessage(), e.getMessage());
         }
     }
 }

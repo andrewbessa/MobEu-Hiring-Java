@@ -10,15 +10,15 @@ import com.mobiquityinc.knapsack.factory.PacketItemFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public  class KnapsackDPFactory implements KnapsackFactory {
+public  class KnapsackDPFactoryImpl implements KnapsackFactory {
 
-    private static KnapsackDPFactory instance;
+    private static KnapsackDPFactoryImpl instance;
 
-    private KnapsackDPFactory() {}
+    private KnapsackDPFactoryImpl() {}
 
-    public static KnapsackDPFactory getInstance(){
+    public static KnapsackDPFactoryImpl getInstance(){
         if(instance == null) {
-            instance = new KnapsackDPFactory();
+            instance = new KnapsackDPFactoryImpl();
         }
         return instance;
     }
@@ -33,8 +33,10 @@ public  class KnapsackDPFactory implements KnapsackFactory {
 
     private List<PacketItem> generatePacketItemList(final String items) throws APIException {
         List<PacketItem> result = new ArrayList<>();
+        PacketItemFactory packetItemFactory = PacketItemFactoryImpl.getInstance();
+
         for (String item: items.split("\\)")) {
-            result.add(PacketItemFactory.getInstance().createPacketItem(item));
+            result.add(packetItemFactory.createPacketItem(item));
         }
         return result;
     }

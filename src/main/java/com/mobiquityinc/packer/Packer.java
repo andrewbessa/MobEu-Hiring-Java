@@ -3,6 +3,7 @@ package com.mobiquityinc.packer;
 import com.mobiquityinc.exception.APIException;
 import com.mobiquityinc.exception.ExceptionMessage;
 import com.mobiquityinc.knapsack.Knapsack;
+import com.mobiquityinc.knapsack.factory.impl.KnapsackDPFactoryImpl;
 import com.mobiquityinc.knapsack.factory.KnapsackFactory;
 
 import java.io.IOException;
@@ -21,15 +22,14 @@ public final class Packer {
 
     public static String pack(final String filePath) throws APIException {
 
-        if(filePath == null){
-            throw new APIException(ExceptionMessage.PATH_FILE_NULL.getMessage());
-        }
+        validateField(filePath);
+        KnapsackFactory knapsackFactory = KnapsackDPFactoryImpl.getInstance();
 
         try (Stream<String> stream = Files.lines(Paths.get(filePath))) {
 
             List<String> packets = new ArrayList<>();
             for (String line : stream.toArray(String[]::new)) {
-                Knapsack knapsack = KnapsackFactory.getInstance().createKnapsack(line);
+                Knapsack knapsack = knapsackFactory.createKnapsack(line);
                 packets.add(knapsack.obtainBetterCombination().toString());
             }
 
@@ -41,6 +41,13 @@ public final class Packer {
             throw new APIException(e.getMessage());
         }
 
+    }
+
+
+    private static  void validateField(final String filePath) throws APIException {
+        if(filePath == null){
+            throw new APIException(ExceptionMessage.PATH_FILE_NULL.getMessage());
+        }
     }
 
 }

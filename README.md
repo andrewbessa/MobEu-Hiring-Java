@@ -22,7 +22,9 @@ You want to send your friend a package with different things. Each thing you put
 
 ### Solution
 
-[Documentation](http://htmlpreview.github.io/?https://github.com/andrewbessa/MobEu-Hiring-Java/blob/master/documentation/doc.html) 
+I considered the explanation of the version of the 0-1 Knapsack algorithm too long to put in the Readme. So I prepared a documentation page with more detailed information about the algorithm used.
+
+[Documentation](http://htmlpreview.github.io/?https://github.com/andrewbessa/MobEu-Hiring-Java/blob/master/documentation/doc.html) 0-1 Knapsack
 
 ## Architecture overview
 

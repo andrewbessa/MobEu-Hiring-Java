@@ -11,14 +11,14 @@ public class PacketItem {
 
     public PacketItem(final int itemId, final float weight, final float cost) throws APIException {
 
-        validate(itemId, weight, cost);
+        validateField(itemId, weight, cost);
 
         this.itemId = itemId;
         this.weight = weight;
         this.cost = cost;
     }
 
-    private void validate(int itemId, float weight, float value) throws APIException {
+    private void validateField(int itemId, float weight, float value) throws APIException {
 
         if(itemId < 0) {
             throw new APIException(ExceptionMessage.ITEM_ID.getMessage());

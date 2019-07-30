@@ -4,34 +4,9 @@ import com.mobiquityinc.exception.APIException;
 import com.mobiquityinc.knapsack.PacketItem;
 import com.mobiquityinc.exception.ExceptionMessage;
 
-public class PacketItemFactory {
+public interface PacketItemFactory {
 
-    private static PacketItemFactory instance;
 
-    private PacketItemFactory() {}
+    PacketItem createPacketItem(final String item) throws APIException;
 
-    public static PacketItemFactory getInstance(){
-        if(instance == null){
-            instance = new PacketItemFactory();
-        }
-        return instance;
-    }
-
-    public PacketItem createPacketItem(final String item) throws APIException {
-
-        try {
-
-            String[] elements = item.replace("(", "")
-                .replace("€", "").split(",");
-
-            int itemId = Integer.valueOf(elements[0].trim());
-            float itemWeight = Float.valueOf(elements[1].trim());
-            float itemCost = Float.valueOf(elements[2].trim());
-
-            return new PacketItem(itemId, itemWeight, itemCost);
-
-        } catch (NumberFormatException e) {
-            throw new APIException(ExceptionMessage.BAD_NUMBER_FORMAT.getMessage(), e);
-        }
-    }
 }

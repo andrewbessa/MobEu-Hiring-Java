@@ -3,6 +3,7 @@ package com.mobiquityinc.exception;
 public enum  ExceptionMessage {
 
     LIST_OF_PACKETS_NULL("List of packets is null"),
+    LIST_OF_PACKETS_GREATER_THAN_LIMIT("List of packets is greater than limit"),
     PATH_FILE_NULL("Path of file is null"),
     NO_SUCH_FILE("No such file"),
     BAD_NUMBER_FORMAT("Bad number format"),

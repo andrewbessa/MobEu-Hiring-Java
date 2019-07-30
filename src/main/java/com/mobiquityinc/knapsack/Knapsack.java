@@ -166,6 +166,10 @@ public class Knapsack {
             throw new APIException(ExceptionMessage.LIST_OF_PACKETS_NULL.getMessage());
         }
 
+        if(listPacketItems.size() > 15){
+            throw new APIException(ExceptionMessage.LIST_OF_PACKETS_GREATER_THAN_LIMIT.getMessage());
+        }
+
         if(maxWeight > 100 || maxWeight < 0){
             throw new APIException(ExceptionMessage.PACKET_WEIGHT.getMessage());
         }

@@ -68,3 +68,18 @@ I considered the explanation of the version of the 0-1 Knapsack algorithm too lo
     ├── testFile01BadFormat.txt
     └── testFile02BadFormat.txt
 ```
+
+## Install
+#### Download the repository
+```sh
+$ git clone https://github.com/andrewbessa/MobEu-Hiring-Java
+```
+
+#### Run tests
+```sh
+$ cd MobEu-Hiring-Java && mvn clean test
+```
+
+## Author
+
+* **André Bessa** - [LinkedIn](https://www.linkedin.com/in/andregomesbessa/)

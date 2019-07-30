@@ -3,7 +3,7 @@ package com.mobiquityinc.packer;
 import com.mobiquityinc.exception.APIException;
 import com.mobiquityinc.exception.ExceptionMessage;
 import com.mobiquityinc.knapsack.Knapsack;
-import com.mobiquityinc.knapsack.factory.impl.KnapsackDPFactoryImpl;
+import com.mobiquityinc.knapsack.factory.impl.KnapsackFactoryImpl;
 import com.mobiquityinc.knapsack.factory.KnapsackFactory;
 
 import java.io.IOException;
@@ -23,7 +23,7 @@ public final class Packer {
     public static String pack(final String filePath) throws APIException {
 
         validateField(filePath);
-        KnapsackFactory knapsackFactory = KnapsackDPFactoryImpl.getInstance();
+        KnapsackFactory knapsackFactory = KnapsackFactoryImpl.getInstance();
 
         try (Stream<String> stream = Files.lines(Paths.get(filePath))) {
 

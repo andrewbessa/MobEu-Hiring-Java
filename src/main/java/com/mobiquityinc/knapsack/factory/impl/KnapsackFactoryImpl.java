@@ -10,15 +10,15 @@ import com.mobiquityinc.knapsack.factory.PacketItemFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-public  class KnapsackDPFactoryImpl implements KnapsackFactory {
+public  class KnapsackFactoryImpl implements KnapsackFactory {
 
-    private static KnapsackDPFactoryImpl instance;
+    private static KnapsackFactoryImpl instance;
 
-    private KnapsackDPFactoryImpl() {}
+    private KnapsackFactoryImpl() {}
 
-    public static KnapsackDPFactoryImpl getInstance(){
+    public static KnapsackFactoryImpl getInstance(){
         if(instance == null) {
-            instance = new KnapsackDPFactoryImpl();
+            instance = new KnapsackFactoryImpl();
         }
         return instance;
     }

@@ -25,9 +25,9 @@ public class PacketItemFactoryImpl implements PacketItemFactory{
             String[] elements = item.replace("(", "")
                 .replace("€", "").split(",");
 
-            int itemId = Integer.valueOf(elements[0].trim());
-            float itemWeight = Float.valueOf(elements[1].trim());
-            float itemCost = Float.valueOf(elements[2].trim());
+            int itemId = Integer.parseInt(elements[0].trim());
+            float itemWeight = Float.parseFloat(elements[1].trim());
+            float itemCost = Float.parseFloat(elements[2].trim());
 
             return new PacketItem(itemId, itemWeight, itemCost);
 

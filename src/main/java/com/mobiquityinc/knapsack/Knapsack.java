@@ -11,9 +11,9 @@ public class Knapsack {
 
     private static final int SELECTED_ITEM = 1;
 
-    private final int maxPacketWeight;
+    private final int maxPacketWeight; 
     private final List<PacketItem> listPacketItems;
-    private float[][] tblAcumuValues;
+    private float[][] tblAcumuCost;
     private float[][] tblAcumuWeight;
     private int [][] tblSelectItems;
     private List<Integer> betterCombination; //Best Match List Found
@@ -26,13 +26,12 @@ public class Knapsack {
         this.listPacketItems = listPacketItems;
 
         this.tblSelectItems = new int[listPacketItems.size()+1][maxPacketWeight+1];
-        this.tblAcumuValues = new float[listPacketItems.size()+1][maxPacketWeight+1];
+        this.tblAcumuCost = new float[listPacketItems.size()+1][maxPacketWeight+1];
         this.tblAcumuWeight = new float[listPacketItems.size()+1][maxPacketWeight+1];
     }
 
     /**
-     *
-     * @return Return list with the best match found that was previously registered
+     * Return list with the best match found that was previously registered
      */
     public List<Integer> obtainBetterCombination(){
         if(betterCombination == null){
@@ -48,7 +47,7 @@ public class Knapsack {
     private void processBetterCombination(){
         for(int item = 1; item <= listPacketItems.size(); item++ ) {// Item from id 1 to size of item list
             for(int capacity = 1; capacity <= maxPacketWeight; capacity++){ // Capacity from 1 to maxPacketWeight
-                PacketItem element = listPacketItems.get(item - 1);
+                PacketItem element = listPacketItems.get(item - 1); //Current element
                 updateTableAcumuValues(element, capacity);// Updates the accumulating value of each iteration.
                 updateTblAcumuWeightTblSelectItems(element, capacity); // Updates the accumulating weight and selected item  of each iteration.
             }
@@ -57,8 +56,6 @@ public class Knapsack {
 
     /**
      * Calculates and returns list with the best match found
-     *
-     * @return Returns list with the best match found
      */
     private List<Integer> extractBetterCombination(){
         int remainingCapacity = maxPacketWeight;
@@ -84,10 +81,10 @@ public class Knapsack {
      */
     private void updateTableAcumuValues(final PacketItem packetItem, final int capacity) {
         //Max value without the value of the current element.
-        float maxValWithoutCurr = tblAcumuValues[packetItem.getItemId()-1][capacity];
+        float maxValWithoutCurr = tblAcumuCost[packetItem.getItemId()-1][capacity];
         //Max value without the value of the current element.
         float maxValWithCurr = calcMaxValWithCurr(packetItem, capacity);
-        tblAcumuValues[packetItem.getItemId()][capacity] = Math.max(maxValWithoutCurr, maxValWithCurr);
+        tblAcumuCost[packetItem.getItemId()][capacity] = Math.max(maxValWithoutCurr, maxValWithCurr);
     }
 
     /**
@@ -97,7 +94,7 @@ public class Knapsack {
      * @param capacity
      */
     private void updateTblAcumuWeightTblSelectItems(final PacketItem packetItem, final int capacity) {
-        float maxValWithoutCurr = tblAcumuValues[packetItem.getItemId()-1][capacity];
+        float maxValWithoutCurr = tblAcumuCost[packetItem.getItemId()-1][capacity];
         float maxValWithCurr = calcMaxValWithCurr(packetItem, capacity);
 
         if(maxValWithCurr > maxValWithoutCurr){
@@ -131,9 +128,9 @@ public class Knapsack {
         float result = 0;
         int remainingCapacity = 0;
         if(capacity >= packetItem.getWeight()){
-            result = packetItem.getValue();
+            result = packetItem.getCost();
             remainingCapacity = calcCapacityRemaining(capacity, packetItem);
-            result += tblAcumuValues[packetItem.getItemId()-1][remainingCapacity];
+            result += tblAcumuCost[packetItem.getItemId()-1][remainingCapacity];
         }
         return result;
     }

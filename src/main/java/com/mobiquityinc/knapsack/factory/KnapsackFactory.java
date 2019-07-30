@@ -28,9 +28,9 @@ public  class KnapsackFactory  {
         return new Knapsack(weight, packetItemsList);
     }
 
-    private List<PacketItem> generatePacketItemList(final String itens) throws APIException {
+    private List<PacketItem> generatePacketItemList(final String items) throws APIException {
         List<PacketItem> result = new ArrayList<>();
-        for (String item: itens.split("\\)")) {
+        for (String item: items.split("\\)")) {
             result.add(PacketItemFactory.getInstance().createPacketItem(item));
         }
         return result;

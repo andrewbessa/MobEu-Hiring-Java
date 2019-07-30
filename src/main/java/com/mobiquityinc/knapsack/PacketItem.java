@@ -7,15 +7,15 @@ public class PacketItem {
 
     private final int itemId;
     private final float weight;
-    private final float value;
+    private final float cost;
 
-    public PacketItem(final int itemId, final float weight, final float value) throws APIException {
+    public PacketItem(final int itemId, final float weight, final float cost) throws APIException {
 
-        validate(itemId, weight, value);
+        validate(itemId, weight, cost);
 
         this.itemId = itemId;
         this.weight = weight;
-        this.value = value;
+        this.cost = cost;
     }
 
     private void validate(int itemId, float weight, float value) throws APIException {
@@ -29,7 +29,7 @@ public class PacketItem {
         }
 
         if(value > 100 || value < 0) {
-            throw new APIException(ExceptionMessage.ITEM_VALUE.getMessage());
+            throw new APIException(ExceptionMessage.ITEM_COST.getMessage());
         }
 
     }
@@ -42,8 +42,8 @@ public class PacketItem {
         return weight;
     }
 
-    public float getValue() {
-        return value;
+    public float getCost() {
+        return cost;
     }
 
 }

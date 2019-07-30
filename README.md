@@ -29,11 +29,11 @@ I considered the explanation of the version of the 0-1 Knapsack algorithm too lo
 ## Project structure
 
 ```
-├── README.md
 ├── documentation
 │   ├── doc.adoc
-│   └── doc.html 
+│   └── doc.html
 ├── pom.xml
+├── README.md
 ├── src
 │   ├── main
 │   │   └── java
@@ -43,27 +43,30 @@ I considered the explanation of the version of the 0-1 Knapsack algorithm too lo
 │   │               │   ├── APIException.java
 │   │               │   └── ExceptionMessage.java
 │   │               ├── knapsack
+│   │               │   ├── factory
+│   │               │   │   ├── impl
+│   │               │   │   │   ├── KnapsackDPFactoryImpl.java
+│   │               │   │   │   └── PacketItemFactoryImpl.java
+│   │               │   │   ├── KnapsackFactory.java
+│   │               │   │   └── PacketItemFactory.java
 │   │               │   ├── Knapsack.java
-│   │               │   ├── PacketItem.java
-│   │               │   └── factory
-│   │               │       ├── KnapsackFactory.java
-│   │               │       └── PacketItemFactory.java
+│   │               │   └── PacketItem.java
 │   │               └── packer
 │   │                   └── Packer.java
 │   └── test
 │       └── java
 │           └── com
 │               └── packer
-│                   ├── PackerTest.java
 │                   ├── knapsack
 │                   │   ├── KnapsackTest.java
 │                   │   └── PacketItemTest.java
+│                   ├── PackerTest.java
 │                   └── util
 │                       └── FileTestUtil.java
 └── test_files
-    ├── resultFile01.txt
-    ├── testFile01.txt
+    ├── resultFile01.txt
     ├── testFile01BadFormat.txt
+    ├── testFile01.txt
     └── testFile02BadFormat.txt
 ```
 

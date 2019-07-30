@@ -84,6 +84,11 @@ $ git clone https://github.com/andrewbessa/MobEu-Hiring-Java
 ```sh
 $ cd MobEu-Hiring-Java && mvn clean test
 ```
+
+#### Run application
+```sh
+mvn exec:java -Dexec.args="test_files/testFile01.txt"
+```
 ## Author
 
 * **André Bessa** - [LinkedIn](https://www.linkedin.com/in/andregomesbessa/)

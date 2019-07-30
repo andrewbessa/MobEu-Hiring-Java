@@ -20,7 +20,7 @@ public class Knapsack {
 
     public Knapsack(final int maxPacketWeight, final List<PacketItem> listPacketItems) throws APIException {
 
-        validate(maxPacketWeight, listPacketItems);
+        validateFields(maxPacketWeight, listPacketItems);
 
         this.maxPacketWeight = maxPacketWeight;
         this.listPacketItems = listPacketItems;
@@ -139,17 +139,18 @@ public class Knapsack {
      *
      * @param capacity
      * @param packetItem
-     * @return the capacity must the integer immediately before or after the remaining capacity value
+     * @return the capacity must the integer immediately before or after the remaining capacity
      */
     private int calcCapacityRemaining(final int capacity, final PacketItem packetItem) {
         float weightOfCurrent = packetItem.getWeight();
         float capacityRemaining = capacity - weightOfCurrent;
         int result = (int)capacityRemaining;
         if( capacityRemaining != result ){ //Check if the value is integer or float
-            //Interger values immediately before or after the remaining capacity value
+            //Interger values immediately before and after the remaining capacity value
             int before = (int)capacityRemaining;
             int after = (int)(capacityRemaining + 1);
-            //If capacity is greater than
+
+            //If capacity is greater than acumulate weight
             if (capacityRemaining > tblAcumuWeight[packetItem.getItemId()-1][after]){
                 result = after;
             }else{
@@ -159,14 +160,7 @@ public class Knapsack {
         return result;
     }
 
-    /**
-     * Validate input values
-     *
-     * @param maxWeight
-     * @param listPacketItems
-     * @throws APIException
-     */
-    private void validate(int maxWeight, List<PacketItem> listPacketItems) throws APIException {
+    private void validateFields(final int maxWeight, final List<PacketItem> listPacketItems) throws APIException {
 
         if(listPacketItems == null){
             throw new APIException(ExceptionMessage.LIST_OF_PACKETS_NULL.getMessage());

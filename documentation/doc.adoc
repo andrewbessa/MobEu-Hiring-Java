@@ -1,0 +1,201 @@
+= Project Documentation
+
+== Challenge
+You want to send your friend a package with different things. Each thing you put inside the package has: 
+
+* id, weight, cost
+* The package has a weight limit. 
+
+=== Goals
+
+The goals are:
+
+* The total weight is less than or equal to the package limit; 
+* The total cost is as large as possible;
+* You would prefer to send a package which weights less in case there is more than one
+package with the same price.
+* Max weight that a package can take is ≤ 100
+* There might be up to 15 items you need to choose from
+* Max weight and cost of an item is ≤ 100
+
+=== Input and Output Format
+
+Item
+
+----
+(<item_id>, <weight>, €<cost>) 
+----
+
+Max packet weight and list of items
+
+----
+<Max Weight> : item01 item02 ...
+----
+
+== Solution
+
+The problem described is known as 0-1 Knapsack. There are several viable solutions for it,the adopted one makes use of the dynamic programming technique. The traditional algorithm is implemented for items with weight described by integer values, but in our case the weight may have float values which required a slight change in the traditional algorithm.
+
+=== 0-1 Knapsack by Dynamic Programming
+
+Dynamic Programming Compute the solutions to the subsub-problems once and store the solutions in a table, so that they can be reused (repeatedly) later. Basically a problem is divided into problem of different sizes. As the minor problems are resolved, the results are used to help solve the larger ones.
+
+Imagine a package that supports a weight of W = 10 and we have to choose from 4 items which will be placed in the package respecting the maximum weight. We can do this first by solving the problem of choosing an item and checking whether or not it fits in a maximum weight 1 package, then maximum weight 2, we do it up to 10.
+
+[cols="3,2,2,2,2,2,2,2,2,2,2"]
+|=======
+|TW |1| 2| 3| 4| 5| 6| 7| 8| 9| 10
+|(1, 5, €40 ) | 0|0 |0 |0 |5 | 5|5 |5 |5 | 5
+|=======
+
+Let's call the table above TW. What TW tells us is that we can add item 1 with weight 5 to any package with a maximum capacity above 5. Let's assemble the line taking into account that we have items.
+
+[cols="3,2,2,2,2,2,2,2,2,2,2"]
+|=======
+|TW |1| 2| 3| 4| 5| 6| 7| 8| 9| 10
+|(1, 5, €40 ) | 0|0 |0 |0 |5 | 5| 5 |5 |5 | 5
+|(2, 4, €10 ) | 0|0 |0 |4 |5 | |  | | | 
+|=======
+
+When TW capacity is 4 we can add item 2 to the package, item 1 weighs more than maximum capacity so it is not eligible. When the package has capacity 5, both item 1 and two are eligible. Although the weight of item 2 is less than the weight of item 1, the cost associated with 1 is greater than that associated with 2 so item 1 was chosen.
+
+Since cost has priority over weight, and cost values are also used for analysis, let's create a sacred table called TC that fills in at the same time as TW and stores the package cost. TC will now be our reference table and TW will be used to support some decisions. 
+
+[cols="3,2,2,2,2,2,2,2,2,2,2"]
+|=======
+|TC |1| 2| 3| 4| 5| 6| 7| 8| 9| 10
+|(1, 5, €40 ) | 0|0 |0 |0 |40 | 40| 40 |40 |40 | 40
+|(2, 4, €10 ) | 0|0 |0 |10 |40 | 40| 40|40 |50 | 50 
+|=======
+
+[cols="3,2,2,2,2,2,2,2,2,2,2"]
+|=======
+|TW |1| 2| 3| 4| 5| 6| 7| 8| 9| 10
+|(1, 5, €40 ) | 0|0 |0 |0 |5 | 5| 5 |5 |5 | 5
+|(2, 4, €10 ) | 0|0 |0 |4 |5 | 5| 5 |5 |9 |9 
+|=======
+
+Continuing to fill in TC and TW we can notice that when the package capacity reaches weight 9, even adding item 2 still has 5 left as free weight, enough to add item 1. At that time item 1 and 2 do not compete, the sum both costs more than previous decisions. As a general rule we can say that TC will be updated when:
+
+```
+remaining_capacity = capacity - weight(i)
+TC[i][j] = max(TC[i-1][j], cost(i) + TC[i-1][remaining_capacity])
+```
+After we recursively perform this step for the 4 TC items we get the following setting:
+
+[cols="3,2,2,2,2,2,2,2,2,2,2"]
+|=======
+|TC |1| 2| 3| 4| 5| 6| 7| 8| 9| 10
+|(1, 5, €40 ) | 0|0 |0 |0 |40 | 40| 40 |40 |40 | 40
+|(2, 4, €10 ) | 0|0 |0 |10 |40 | 40| 40|40 |50 | 50 
+|(3, 6, €30 ) | 0|0 |0 |10 |40 | 40| 40|40 |50 | 50 
+|(4, 3, €50 ) | 0|0 |0 |50 |50 | 50| 60|90 |90 | 90 
+|=======
+
+The last column of the last row, ie TC [4] [10] contains the optimal cost for selecting from 4 items for a 10 capacity package, just as TW [4] [10] contains the weight of that package, but these two tables do not directly answer which items have been selected. To get this answer let's create a third table called TS that stores 1 when the respective row item is added to the bag and 0 when not. A general solution could be:
+
+```
+if TC[i-1][j] < cost(i) + TC[i-1][remaining_capacity]) {
+    TS[i][j] = 1
+} else {
+    TS[i][j] = 0
+}
+```
+
+Case TC[i-1][j] == cost(i) + TC[i-1][remaining_capacity], we should prioritize the value with the lowest weight. To do this we must search in TS, for the same capacity, the predecessor item that was also selected in his round. If we find any, we compare their weight with the weight of the current item if the current item is lighter than its TS predecessor gets 1. The updated algorithm looks as follows:
+
+```
+if TC[i-1][j] < cost(i) + TC[i-1][remaining_capacity]) {
+    TS[i][j] = 1
+} else if TC[i-1][j] == cost(i) + TC[i-1][remaining_capacity] {
+    y = i
+    while TS[y][j] != 1 and y > 0{
+        y -= 1
+    }
+    if y > 0 and weight(i) < weight(y){
+         TS[i][j] = 1
+    } else {
+         TS[i][j] = 0
+    }
+} else {
+     TS[i][j] = 0
+}
+```
+We can take advantage of the TS update to update TW, whenever the current item is selected we must have the relative field value in TW. The final version of the routine that processes TC and TW looks like this:
+
+```
+if TC[i-1][j] < cost(i) + TC[i-1][remaining_capacity]) {
+    TS[i][j] = 1
+    TW[i][j] = TW[i-1][j] + weight(i)
+} else if TC[i-1][j] == cost(i) + TC[i-1][remaining_capacity] {
+    y = i
+    while TS[y][j] != 1 and y > 0{
+        y -= 1
+    }
+    if y > 0 and weight(i) < weight(y){
+        TS[i][j] = 1
+        TW[i][j] = TW[i-1][j] + weight(i)
+    } else {
+        TS[i][j] = 0
+        TW[i][j] = TW[i-1][j]
+    }
+} else {
+     TS[i][j] = 0
+     TW[i][j] = TW[i-1][j]
+}
+```
+
+The TW and TS table for this last processing are:
+
+[cols="3,2,2,2,2,2,2,2,2,2,2"]
+|=======
+|TW |1| 2| 3| 4| 5| 6| 7| 8| 9| 10
+|(1, 5, €40 ) | 0|0 |0 |0 |5 | 5| 5 |5 |5 | 5
+|(2, 4, €10 ) | 0|0 |0 |4 |5 | 5| 5 |5 |9 | 9 
+|(3, 6, €30 ) | 0|0 |0 |4 |5 | 5| 5 |5 |9 | 9 
+|(4, 3, €50 ) | 0|0 |0 |3 |3 | 3| 7 |8 |8 | 8 
+|=======
+
+[cols="3,2,2,2,2,2,2,2,2,2,2"]
+|=======
+|TS |1| 2| 3| 4| 5| 6| 7| 8| 9| 10
+|(1, 5, €40 ) | 0|0 |0 |0 |1 | 1| 1 |1 |1 | 1
+|(2, 4, €10 ) | 0|0 |0 |0 |0 | 0| 0 |0 |1 | 1 
+|(3, 6, €30 ) | 0|0 |0 |0 |0 | 0| 0 |0 |0 | 0 
+|(4, 3, €50 ) | 0|0 |0 |1 |1 | 1| 1 |1 |1 | 1 
+|=======
+
+Finally to find the selected items, we must scan TS for the elements that have been selected. This search should start with TS [n] [w] going back row by row, when TS [i] [w] == 1 the value of i must be saved and we must discount w from the weight of the element i. Follows the source:
+
+```
+capacity = 10
+from item = 4 downto 1{
+    if TS[item][capacity] == 1 {
+        output item
+        capacity = capacity = weight(item)
+    }
+}
+```
+
+=== Weight With Float Value
+
+With the current structure we can work smoothly with integer weights, but if the weight is represented by a float we have a problem with the TC rule. As we need to calculate the remaining capacity when we add an item this capacity will be a value between two integers which does not allow it to be used as an index in the tables.
+
+When subtracting the item's weight from capacity we need to pay attention to some details. If the result can be represented by an integer variable, it must be returned normally.Caso o resultado seja float, devemos calcular os valores inteiros anterior e posterior ao resultado, dessa maneira temos acesso a duas configurações diferentes de capacidade uma maior e outrar menor. O próximo passo é verificar se a capacidade restante é maior que o peso de TW[i-1][after]  caso seja, o valor porterior ser utilizado, caso o contrario utilizamos o valor anterior. Follows code representation:
+
+```
+remaining_capacity = capacity - weight(item)
+if remaining_capacity is not integer {
+    after = int(remaining_capacity + 1)
+    before = int(remaining_capacity)
+    if remaining_capacity > TW[item -1][after] {
+        remaining_capacity = after
+    } else {
+        remaining_capacity = before
+    }
+}
+return remaining_capacity
+```
+
+== Project Structure
+

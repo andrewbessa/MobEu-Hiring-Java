@@ -10,7 +10,8 @@ public enum  ExceptionMessage {
     ITEM_ID("Item id must be greater than zero "),
     ITEM_WEIGHT("Item weight must to be between 0 and 100"),
     ITEM_COST("Item value must to be between 0 and 100"),
-    PACKET_WEIGHT("Item weight must to be between 0 and 100");
+    PACKET_WEIGHT("Item weight must to be between 0 and 100"),
+    INPUT_LINE_BAD_FORMATED("Input line bad formated");
 
     private String message;
 

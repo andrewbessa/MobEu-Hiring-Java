@@ -27,6 +27,13 @@ public class KnapsackTest {
     }
 
     @Test
+    public void caseListItemsTest() throws APIException {
+        List<PacketItem> items = new ArrayList<>();
+        Knapsack knapsack = new Knapsack(5, items);
+        Assert.assertEquals("[]", knapsack.obtainBetterCombination().toString().trim());
+    }
+
+    @Test
     public void caseEmptyAnswerTest() throws APIException {
         List<PacketItem> items = new ArrayList<>();
         items.add(new PacketItem(1, (float) 8.77,79));
@@ -44,6 +51,20 @@ public class KnapsackTest {
         items.add(new PacketItem(4, (float) 6.76,64));
         Knapsack knapsack = new Knapsack(56, items);
         Assert.assertEquals("[3, 4]", knapsack.obtainBetterCombination().toString().trim());
+    }
+
+
+
+    @Test
+    public void caseItemsSameWeight() throws APIException {
+
+        List<PacketItem> items = new ArrayList<>();
+        items.add(new PacketItem(1, (float) 16.36,79));
+        items.add(new PacketItem(2, (float) 16.36,45));
+        items.add(new PacketItem(3, (float) 16.36,79));
+        items.add(new PacketItem(4, (float) 16.36,64));
+        Knapsack knapsack = new Knapsack(56, items);
+        Assert.assertEquals("[1, 3, 4]", knapsack.obtainBetterCombination().toString().trim());
     }
 
     @Test

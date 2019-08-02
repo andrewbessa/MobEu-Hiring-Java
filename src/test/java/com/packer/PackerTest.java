@@ -66,4 +66,28 @@ public class PackerTest {
         }
     }
 
+    @Test
+    public void badFormatWithoutPacketItemTest() {
+
+        String pathFileTest = FileTestUtil.pathGenerator(new String[]{"test_files", "testFile03BadFormat.txt"});
+
+        try {
+            Packer.pack(pathFileTest);
+        } catch (APIException e) {
+            Assert.assertEquals(ExceptionMessage.INPUT_LINE_BAD_FORMATED.getMessage(), e.getMessage());
+        }
+    }
+
+    @Test
+    public void badFormatWithoutWeightTest() {
+
+        String pathFileTest = FileTestUtil.pathGenerator(new String[]{"test_files", "testFile04BadFormat.txt"});
+
+        try {
+            Packer.pack(pathFileTest);
+        } catch (APIException e) {
+            Assert.assertEquals(ExceptionMessage.BAD_NUMBER_FORMAT.getMessage(), e.getMessage());
+        }
+    }
+
 }

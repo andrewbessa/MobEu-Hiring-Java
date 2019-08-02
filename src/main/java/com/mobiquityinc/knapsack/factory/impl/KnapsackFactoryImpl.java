@@ -26,6 +26,9 @@ public  class KnapsackFactoryImpl implements KnapsackFactory {
     @Override
     public Knapsack createKnapsack(final String line) throws APIException {
         String[] components = line.split(":");
+        if(components.length != 2){
+            throw new APIException(ExceptionMessage.INPUT_LINE_BAD_FORMATED.getMessage());
+        }
         int weight = extractMaxWeight(components[0]);
         List<PacketItem> packetItemsList = generatePacketItemList(components[1]);
         return new Knapsack(weight, packetItemsList);

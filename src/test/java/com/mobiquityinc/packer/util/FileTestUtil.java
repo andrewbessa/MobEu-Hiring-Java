@@ -1,4 +1,4 @@
-package com.packer.util;
+package com.mobiquityinc.packer.util;
 
 import java.io.IOException;
 import java.nio.file.Files;

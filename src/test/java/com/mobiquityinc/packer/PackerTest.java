@@ -1,9 +1,8 @@
-package com.packer;
+package com.mobiquityinc.packer;
 
 import com.mobiquityinc.exception.APIException;
 import com.mobiquityinc.exception.ExceptionMessage;
-import com.packer.util.FileTestUtil;
-import com.mobiquityinc.packer.Packer;
+import com.mobiquityinc.packer.util.FileTestUtil;
 import org.junit.Assert;
 import org.junit.Test;
 

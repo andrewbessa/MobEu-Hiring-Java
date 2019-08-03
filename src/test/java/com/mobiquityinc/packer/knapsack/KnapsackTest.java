@@ -1,4 +1,4 @@
-package com.packer.knapsack;
+package com.mobiquityinc.packer.knapsack;
 
 import com.mobiquityinc.exception.APIException;
 import com.mobiquityinc.exception.ExceptionMessage;

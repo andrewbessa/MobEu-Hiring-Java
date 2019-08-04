@@ -26,11 +26,11 @@ public class PacketItem {
             throw new APIException(ExceptionMessage.ITEM_ID.getMessage());
         }
 
-        if(weight.compareTo(BigDecimal.valueOf(100)) == 1 || weight.compareTo(BigDecimal.valueOf(0)) == -1) {
+        if(weight.compareTo(BigDecimal.valueOf(100)) > 0 || weight.compareTo(BigDecimal.valueOf(0)) < 0) {
             throw new APIException(ExceptionMessage.ITEM_WEIGHT.getMessage());
         }
 
-        if(value.compareTo(BigDecimal.valueOf(100)) == 1 || value.compareTo(BigDecimal.valueOf(0)) == -1) {
+        if(value.compareTo(BigDecimal.valueOf(100)) > 0  || value.compareTo(BigDecimal.valueOf(0)) < 0) {
             throw new APIException(ExceptionMessage.ITEM_COST.getMessage());
         }
 

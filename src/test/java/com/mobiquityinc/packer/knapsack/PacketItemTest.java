@@ -6,13 +6,15 @@ import com.mobiquityinc.knapsack.PacketItem;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.math.BigDecimal;
+
 public class PacketItemTest {
 
 
     @Test
     public void caseIdLessThan0()  {
         try {
-            new PacketItem(-1, (float) 48.77,79);
+            new PacketItem(-1, new BigDecimal("48.77"),new BigDecimal("79"));
         } catch (APIException e) {
             Assert.assertEquals(ExceptionMessage.ITEM_ID.getMessage(), e.getMessage());
         }
@@ -21,7 +23,7 @@ public class PacketItemTest {
     @Test
     public void caseWeightLessThan0()  {
         try {
-            new PacketItem(1, (float) -48.77,79);
+            new PacketItem(1, new BigDecimal("-48.77"),new BigDecimal("79"));
         } catch (APIException e) {
             Assert.assertEquals(ExceptionMessage.ITEM_WEIGHT.getMessage(), e.getMessage());
         }
@@ -30,7 +32,7 @@ public class PacketItemTest {
     @Test
     public void caseWeightGreatThan100()  {
         try {
-            new PacketItem(1, (float) 488.77,79);
+            new PacketItem(1, new BigDecimal("488.77"),new BigDecimal("79"));
         } catch (APIException e) {
             Assert.assertEquals(ExceptionMessage.ITEM_WEIGHT.getMessage(), e.getMessage());
         }
@@ -39,7 +41,7 @@ public class PacketItemTest {
     @Test
     public void caseValueLessThan0()  {
         try {
-            new PacketItem(1, (float) 48.77,-79);
+            new PacketItem(1, new BigDecimal("48.77"),new BigDecimal("-79"));
         } catch (APIException e) {
             Assert.assertEquals(ExceptionMessage.ITEM_COST.getMessage(), e.getMessage());
         }
@@ -48,7 +50,7 @@ public class PacketItemTest {
     @Test
     public void caseValueGreatThan100()  {
         try {
-            new PacketItem(1, (float) 48.77,-79);
+            new PacketItem(1, new BigDecimal("48.77"),new BigDecimal("-79"));
         } catch (APIException e) {
             Assert.assertEquals(ExceptionMessage.ITEM_COST.getMessage(), e.getMessage());
         }

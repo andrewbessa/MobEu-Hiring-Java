@@ -5,6 +5,8 @@ import com.mobiquityinc.exception.ExceptionMessage;
 import com.mobiquityinc.knapsack.PacketItem;
 import com.mobiquityinc.knapsack.factory.PacketItemFactory;
 
+import java.math.BigDecimal;
+
 public class PacketItemFactoryImpl implements PacketItemFactory{
 
     private static PacketItemFactoryImpl instance;
@@ -26,8 +28,8 @@ public class PacketItemFactoryImpl implements PacketItemFactory{
                 .replace("€", "").split(",");
 
             int itemId = Integer.parseInt(elements[0].trim());
-            float itemWeight = Float.parseFloat(elements[1].trim());
-            float itemCost = Float.parseFloat(elements[2].trim());
+            BigDecimal itemWeight = new BigDecimal(elements[1].trim());
+            BigDecimal itemCost = new BigDecimal(elements[2].trim());
 
             return new PacketItem(itemId, itemWeight, itemCost);
 

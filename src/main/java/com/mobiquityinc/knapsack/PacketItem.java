@@ -3,13 +3,15 @@ package com.mobiquityinc.knapsack;
 import com.mobiquityinc.exception.APIException;
 import com.mobiquityinc.exception.ExceptionMessage;
 
+import java.math.BigDecimal;
+
 public class PacketItem {
 
     private final int itemId;
-    private final float weight;
-    private final float cost;
+    private final BigDecimal weight;
+    private final BigDecimal cost;
 
-    public PacketItem(final int itemId, final float weight, final float cost) throws APIException {
+    public PacketItem(final int itemId, final BigDecimal weight, final BigDecimal cost) throws APIException {
 
         validateField(itemId, weight, cost);
 
@@ -18,17 +20,17 @@ public class PacketItem {
         this.cost = cost;
     }
 
-    private void validateField(int itemId, float weight, float value) throws APIException {
+    private void validateField(int itemId, BigDecimal weight, BigDecimal value) throws APIException {
 
         if(itemId < 0) {
             throw new APIException(ExceptionMessage.ITEM_ID.getMessage());
         }
 
-        if(weight > 100 || weight < 0) {
+        if(weight.compareTo(BigDecimal.valueOf(100)) == 1 || weight.compareTo(BigDecimal.valueOf(0)) == -1) {
             throw new APIException(ExceptionMessage.ITEM_WEIGHT.getMessage());
         }
 
-        if(value > 100 || value < 0) {
+        if(value.compareTo(BigDecimal.valueOf(100)) == 1 || value.compareTo(BigDecimal.valueOf(0)) == -1) {
             throw new APIException(ExceptionMessage.ITEM_COST.getMessage());
         }
 
@@ -38,11 +40,11 @@ public class PacketItem {
         return itemId;
     }
 
-    public float getWeight() {
+    public BigDecimal getWeight() {
         return weight;
     }
 
-    public float getCost() {
+    public BigDecimal getCost() {
         return cost;
     }
 

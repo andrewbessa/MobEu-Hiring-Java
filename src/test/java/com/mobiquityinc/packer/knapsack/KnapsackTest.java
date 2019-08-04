@@ -7,6 +7,7 @@ import com.mobiquityinc.knapsack.PacketItem;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,11 +16,12 @@ public class KnapsackTest {
     @Test
     public void caseSuccessTest() throws APIException {
 
+
         List<PacketItem> items = new ArrayList<>();
-        items.add(new PacketItem(1, (float) 8.77,79));
-        items.add(new PacketItem(2, (float) 81.80,45));
-        items.add(new PacketItem(3, (float) 0.96,79));
-        items.add(new PacketItem(4, (float) 1.76,64));
+        items.add(new PacketItem(1, BigDecimal.valueOf((float)8.77) ,BigDecimal.valueOf((float)79)));
+        items.add(new PacketItem(2, BigDecimal.valueOf((float)81.80),BigDecimal.valueOf((float)45)));
+        items.add(new PacketItem(3, BigDecimal.valueOf((float)0.96),BigDecimal.valueOf((float)79)));
+        items.add(new PacketItem(4, BigDecimal.valueOf((float)1.76),BigDecimal.valueOf((float)64)));
 
         Knapsack knapsack = new Knapsack(10, items);
 
@@ -36,7 +38,7 @@ public class KnapsackTest {
     @Test
     public void caseEmptyAnswerTest() throws APIException {
         List<PacketItem> items = new ArrayList<>();
-        items.add(new PacketItem(1, (float) 8.77,79));
+        items.add(new PacketItem(1, BigDecimal.valueOf((float)8.77),BigDecimal.valueOf((float)79)));
         Knapsack knapsack = new Knapsack(5, items);
         Assert.assertEquals("[]", knapsack.obtainBetterCombination().toString().trim());
     }
@@ -45,24 +47,22 @@ public class KnapsackTest {
     public void caseTwoItemsSameValue() throws APIException {
 
         List<PacketItem> items = new ArrayList<>();
-        items.add(new PacketItem(1, (float) 48.77,79));
-        items.add(new PacketItem(2, (float) 81.80,45));
-        items.add(new PacketItem(3, (float) 19.36,79));
-        items.add(new PacketItem(4, (float) 6.76,64));
+        items.add(new PacketItem(1, BigDecimal.valueOf((float) 48.77),BigDecimal.valueOf((float)79)));
+        items.add(new PacketItem(2, BigDecimal.valueOf((float)81.80),BigDecimal.valueOf((float)45)));
+        items.add(new PacketItem(3, BigDecimal.valueOf((float) 19.36),BigDecimal.valueOf((float)79)));
+        items.add(new PacketItem(4, BigDecimal.valueOf((float) 6.76),BigDecimal.valueOf((float)64)));
         Knapsack knapsack = new Knapsack(56, items);
         Assert.assertEquals("[3, 4]", knapsack.obtainBetterCombination().toString().trim());
     }
-
-
 
     @Test
     public void caseItemsSameWeight() throws APIException {
 
         List<PacketItem> items = new ArrayList<>();
-        items.add(new PacketItem(1, (float) 16.36,79));
-        items.add(new PacketItem(2, (float) 16.36,45));
-        items.add(new PacketItem(3, (float) 16.36,79));
-        items.add(new PacketItem(4, (float) 16.36,64));
+        items.add(new PacketItem(1, BigDecimal.valueOf((float) 16.36),BigDecimal.valueOf((float)79)));
+        items.add(new PacketItem(2, BigDecimal.valueOf((float) 16.36),BigDecimal.valueOf((float)45)));
+        items.add(new PacketItem(3, BigDecimal.valueOf((float)16.36),BigDecimal.valueOf((float)79)));
+        items.add(new PacketItem(4, BigDecimal.valueOf((float)16.36),BigDecimal.valueOf((float)64)));
         Knapsack knapsack = new Knapsack(56, items);
         Assert.assertEquals("[1, 3, 4]", knapsack.obtainBetterCombination().toString().trim());
     }
@@ -81,26 +81,26 @@ public class KnapsackTest {
     public void listPacketItemsGreaterThanLimit() throws APIException {
 
         List<PacketItem> items = new ArrayList<>();
-        items.add(new PacketItem(1, (float) 48.77,79));
-        items.add(new PacketItem(2, (float) 81.80,45));
-        items.add(new PacketItem(3, (float) 19.36,79));
-        items.add(new PacketItem(4, (float) 6.76,64));
-        items.add(new PacketItem(5, (float) 48.77,79));
-        items.add(new PacketItem(6, (float) 81.80,45));
-        items.add(new PacketItem(7, (float) 19.36,79));
-        items.add(new PacketItem(8, (float) 6.76,64));
-        items.add(new PacketItem(9, (float) 48.77,79));
-        items.add(new PacketItem(10, (float) 81.80,45));
-        items.add(new PacketItem(11, (float) 19.36,79));
-        items.add(new PacketItem(12, (float) 6.76,64));
-        items.add(new PacketItem(13, (float) 48.77,79));
-        items.add(new PacketItem(14, (float) 81.80,45));
-        items.add(new PacketItem(15, (float) 19.36,79));
-        items.add(new PacketItem(16, (float) 6.76,64));
-        items.add(new PacketItem(17, (float) 48.77,79));
-        items.add(new PacketItem(18, (float) 81.80,45));
-        items.add(new PacketItem(19, (float) 19.36,79));
-        items.add(new PacketItem(20, (float) 6.76,64));
+        items.add(new PacketItem(1, BigDecimal.valueOf((float) 48.77),BigDecimal.valueOf((float)79)));
+        items.add(new PacketItem(2, BigDecimal.valueOf((float) 81.80),BigDecimal.valueOf((float)45)));
+        items.add(new PacketItem(3, BigDecimal.valueOf((float) 19.36),BigDecimal.valueOf((float)79)));
+        items.add(new PacketItem(4, BigDecimal.valueOf((float) 6.76),BigDecimal.valueOf((float)64)));
+        items.add(new PacketItem(5, BigDecimal.valueOf((float) 48.77),BigDecimal.valueOf((float)79)));
+        items.add(new PacketItem(6, BigDecimal.valueOf((float) 81.80),BigDecimal.valueOf((float)45)));
+        items.add(new PacketItem(7, BigDecimal.valueOf((float) 19.36),BigDecimal.valueOf((float)79)));
+        items.add(new PacketItem(8, BigDecimal.valueOf((float) 6.76),BigDecimal.valueOf((float)64)));
+        items.add(new PacketItem(9, BigDecimal.valueOf((float) 48.77),BigDecimal.valueOf((float)79)));
+        items.add(new PacketItem(10, BigDecimal.valueOf((float) 81.80),BigDecimal.valueOf((float)45)));
+        items.add(new PacketItem(11, BigDecimal.valueOf((float) 19.36),BigDecimal.valueOf((float)79)));
+        items.add(new PacketItem(12, BigDecimal.valueOf((float) 6.76),BigDecimal.valueOf((float)64)));
+        items.add(new PacketItem(13, BigDecimal.valueOf((float) 48.77),BigDecimal.valueOf((float)79)));
+        items.add(new PacketItem(14, BigDecimal.valueOf((float) 81.80),BigDecimal.valueOf((float)45)));
+        items.add(new PacketItem(15, BigDecimal.valueOf((float) 19.36),BigDecimal.valueOf((float)79)));
+        items.add(new PacketItem(16, BigDecimal.valueOf((float) 6.76),BigDecimal.valueOf((float)64)));
+        items.add(new PacketItem(17, BigDecimal.valueOf((float) 48.77),BigDecimal.valueOf((float)79)));
+        items.add(new PacketItem(18, BigDecimal.valueOf((float) 81.80),BigDecimal.valueOf((float)45)));
+        items.add(new PacketItem(19, BigDecimal.valueOf((float) 19.36),BigDecimal.valueOf((float)79)));
+        items.add(new PacketItem(20, BigDecimal.valueOf((float) 6.76),BigDecimal.valueOf((float)64)));
 
         try {
             new Knapsack(10, items);
@@ -119,4 +119,11 @@ public class KnapsackTest {
         }
     }
 
+    @Test
+    public void testBigDecimal() {
+        BigDecimal x = new BigDecimal(10);
+        BigDecimal y = new BigDecimal(11);
+
+        System.out.println(x.max(y));
+    }
 }

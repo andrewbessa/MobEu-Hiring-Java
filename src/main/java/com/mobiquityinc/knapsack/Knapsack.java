@@ -3,6 +3,7 @@ package com.mobiquityinc.knapsack;
 import com.mobiquityinc.exception.APIException;
 import com.mobiquityinc.exception.ExceptionMessage;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,8 +14,8 @@ public class Knapsack {
 
     private final int maxPacketWeight; 
     private final List<PacketItem> listPacketItems;
-    private float[][] tblAcumuCost;
-    private float[][] tblAcumuWeight;
+    private BigDecimal[][] tblAcumuCost;
+    private BigDecimal[][] tblAcumuWeight;
     private int [][] tblSelectItems;
     private List<Integer> betterCombination; //Best Match List Found
 
@@ -26,8 +27,8 @@ public class Knapsack {
         this.listPacketItems = listPacketItems;
 
         this.tblSelectItems = new int[listPacketItems.size()+1][maxPacketWeight+1];
-        this.tblAcumuCost = new float[listPacketItems.size()+1][maxPacketWeight+1];
-        this.tblAcumuWeight = new float[listPacketItems.size()+1][maxPacketWeight+1];
+        this.tblAcumuCost = new BigDecimal[listPacketItems.size()+1][maxPacketWeight+1];
+        this.tblAcumuWeight = new BigDecimal[listPacketItems.size()+1][maxPacketWeight+1];
     }
 
     /**
@@ -81,10 +82,10 @@ public class Knapsack {
      */
     private void updateTableAcumuValues(final PacketItem packetItem, final int capacity) {
         //Max value without the value of the current element.
-        float maxValWithoutCurr = tblAcumuCost[packetItem.getItemId()-1][capacity];
+        BigDecimal maxValWithoutCurr = tblAcumuCost[packetItem.getItemId()-1][capacity];
         //Max value without the value of the current element.
-        float maxValWithCurr = calcMaxValWithCurr(packetItem, capacity);
-        tblAcumuCost[packetItem.getItemId()][capacity] = Math.max(maxValWithoutCurr, maxValWithCurr);
+        BigDecimal maxValWithCurr = calcMaxValWithCurr(packetItem, capacity);
+        tblAcumuCost[packetItem.getItemId()][capacity] = maxValWithoutCurr.max(maxValWithCurr);
     }
 
     /**
@@ -94,23 +95,28 @@ public class Knapsack {
      * @param capacity
      */
     private void updateTblAcumuWeightTblSelectItems(final PacketItem packetItem, final int capacity) {
-        float maxValWithoutCurr = tblAcumuCost[packetItem.getItemId()-1][capacity];
-        float maxValWithCurr = calcMaxValWithCurr(packetItem, capacity);
+        BigDecimal maxValWithoutCurr = tblAcumuCost[packetItem.getItemId()-1][capacity];
+        BigDecimal maxValWithCurr = calcMaxValWithCurr(packetItem, capacity);
 
-        if(maxValWithCurr > maxValWithoutCurr){
+        if(maxValWithCurr.compareTo(maxValWithoutCurr) == 1 ){
             tblSelectItems[packetItem.getItemId()][capacity] = 1;
-            tblAcumuWeight[packetItem.getItemId()][capacity] +=
-                tblAcumuWeight[packetItem.getItemId()-1][capacity] + packetItem.getWeight();
+            tblAcumuWeight[packetItem.getItemId()][capacity] =
+                tblAcumuWeight[packetItem.getItemId()][capacity].add(
+                    tblAcumuWeight[packetItem.getItemId()-1][capacity].add(
+                        packetItem.getWeight()));
+
         } else if(maxValWithCurr == maxValWithoutCurr) {
             int itemId = packetItem.getItemId();
             while( itemId > 0 && tblSelectItems[itemId][capacity] != 1){
                 itemId--;
             }
 
-            if( itemId > 0 && packetItem.getItemId() < listPacketItems.get(itemId-1).getWeight()){
+            if( itemId > 0 && packetItem.getWeight().compareTo(listPacketItems.get(itemId-1).getWeight()) == -1){
                 tblSelectItems[packetItem.getItemId()][capacity] = 1;
-                tblAcumuWeight[packetItem.getItemId()][capacity] +=
-                    tblAcumuWeight[packetItem.getItemId()-1][capacity] + packetItem.getWeight();
+                tblAcumuWeight[packetItem.getItemId()][capacity] =
+                    tblAcumuWeight[packetItem.getItemId()][capacity].add(
+                        tblAcumuWeight[packetItem.getItemId()-1][capacity].add(
+                            packetItem.getWeight()));
             }
         } else {
             tblAcumuWeight[packetItem.getItemId()][capacity] = tblAcumuWeight[packetItem.getItemId()-1][capacity];
@@ -124,13 +130,14 @@ public class Knapsack {
      * @param capacity
      * @return
      */
-    private float calcMaxValWithCurr(final PacketItem packetItem, final int capacity){
-        float result = 0;
+    private BigDecimal calcMaxValWithCurr(final PacketItem packetItem, final int capacity){
+        BigDecimal result = new BigDecimal(0);
         int remainingCapacity = 0;
-        if(capacity >= packetItem.getWeight()){
+        if(packetItem.getWeight().compareTo(BigDecimal.valueOf(capacity)) == 1 ||
+            packetItem.getWeight().compareTo(BigDecimal.valueOf(capacity)) == 0){
             result = packetItem.getCost();
             remainingCapacity = calcCapacityRemaining(capacity, packetItem);
-            result += tblAcumuCost[packetItem.getItemId()-1][remainingCapacity];
+            result = result.add(tblAcumuCost[packetItem.getItemId()-1][remainingCapacity]);
         }
         return result;
     }
@@ -142,16 +149,16 @@ public class Knapsack {
      * @return the capacity must the integer immediately before or after the remaining capacity
      */
     private int calcCapacityRemaining(final int capacity, final PacketItem packetItem) {
-        float weightOfCurrent = packetItem.getWeight();
-        float capacityRemaining = capacity - weightOfCurrent;
-        int result = (int)capacityRemaining;
-        if( capacityRemaining != result ){ //Check if the value is integer or float
+        BigDecimal weightOfCurrent = packetItem.getWeight();
+        BigDecimal capacityRemaining = BigDecimal.valueOf(capacity).subtract(weightOfCurrent);
+        int result = capacityRemaining.intValue();
+        if( capacityRemaining.compareTo(BigDecimal.valueOf(result)) != 0 ){ //Check if the value is integer or float
             //Interger values immediately before and after the remaining capacity value
-            int before = (int)capacityRemaining;
-            int after = (int)(capacityRemaining + 1);
+            int before = capacityRemaining.intValue();
+            int after = capacityRemaining.add(BigDecimal.valueOf(1)).intValue();
 
             //If capacity is greater than acumulate weight
-            if (capacityRemaining > tblAcumuWeight[packetItem.getItemId()-1][after]){
+            if (capacityRemaining.compareTo(tblAcumuWeight[packetItem.getItemId()-1][after]) == 1){
                 result = after;
             }else{
                 result = before;

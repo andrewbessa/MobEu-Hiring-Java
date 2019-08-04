@@ -13,7 +13,9 @@ public class App {
     public static void main(String... args) throws APIException {
 
         for(String path :args){
-            LOGGER.info(Packer.pack(path));
+
+            String message = Packer.pack(path);
+            LOGGER.info(message);
         }
     }
 }

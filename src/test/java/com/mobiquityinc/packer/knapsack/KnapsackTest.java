@@ -119,11 +119,4 @@ public class KnapsackTest {
         }
     }
 
-    @Test
-    public void testBigDecimal() {
-        BigDecimal x = new BigDecimal(10);
-        BigDecimal y = new BigDecimal(11);
-
-        System.out.println(x.max(y));
-    }
 }

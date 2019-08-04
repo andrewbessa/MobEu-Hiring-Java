@@ -106,7 +106,7 @@ public class Knapsack {
         BigDecimal maxValWithoutCurr = tblAcumuCost[packetItem.getItemId()-1][capacity];
         BigDecimal maxValWithCurr = calcMaxValWithCurr(packetItem, capacity);
 
-        if(maxValWithCurr.compareTo(maxValWithoutCurr) == 1 ){
+        if(maxValWithCurr.compareTo(maxValWithoutCurr) > 0 ){
             tblSelectItems[packetItem.getItemId()][capacity] = 1;
 
             tblAcumuWeight[packetItem.getItemId()][capacity] =
@@ -120,7 +120,7 @@ public class Knapsack {
                 itemId--;
             }
 
-            if( itemId > 0 && packetItem.getWeight().compareTo(listPacketItems.get(itemId-1).getWeight()) == -1){
+            if( itemId > 0 && packetItem.getWeight().compareTo(listPacketItems.get(itemId-1).getWeight()) < 0){
                 tblSelectItems[packetItem.getItemId()][capacity] = 1;
                 tblAcumuWeight[packetItem.getItemId()][capacity] =
                     tblAcumuWeight[packetItem.getItemId()][capacity].add(
@@ -142,7 +142,7 @@ public class Knapsack {
     private BigDecimal calcMaxValWithCurr(final PacketItem packetItem, final int capacity){
         BigDecimal result = new BigDecimal(0);
         int remainingCapacity = 0;
-        if(packetItem.getWeight().compareTo(BigDecimal.valueOf(capacity)) == -1 ||
+        if(packetItem.getWeight().compareTo(BigDecimal.valueOf(capacity)) < 0 ||
             packetItem.getWeight().compareTo(BigDecimal.valueOf(capacity)) == 0){
             result = packetItem.getCost();
             remainingCapacity = calcCapacityRemaining(capacity, packetItem);
@@ -167,7 +167,7 @@ public class Knapsack {
             int after = capacityRemaining.add(BigDecimal.valueOf(1)).intValue();
 
             //If capacity is greater than acumulate weight
-            if (capacityRemaining.compareTo(tblAcumuWeight[packetItem.getItemId()-1][after]) == 1){
+            if (capacityRemaining.compareTo(tblAcumuWeight[packetItem.getItemId()-1][after]) > 0){
                 result = after;
             }else{
                 result = before;

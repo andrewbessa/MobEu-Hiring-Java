@@ -48,7 +48,7 @@ public class KnapsackTest {
 
         List<PacketItem> items = new ArrayList<>();
         items.add(new PacketItem(1, BigDecimal.valueOf((float) 48.77),BigDecimal.valueOf((float)79)));
-        items.add(new PacketItem(2, BigDecimal.valueOf((float)81.80),BigDecimal.valueOf((float)45)));
+        items.add(new PacketItem(2, BigDecimal.valueOf((float) 81.80),BigDecimal.valueOf((float)45)));
         items.add(new PacketItem(3, BigDecimal.valueOf((float) 19.36),BigDecimal.valueOf((float)79)));
         items.add(new PacketItem(4, BigDecimal.valueOf((float) 6.76),BigDecimal.valueOf((float)64)));
         Knapsack knapsack = new Knapsack(56, items);

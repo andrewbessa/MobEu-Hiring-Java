@@ -29,6 +29,14 @@ public class Knapsack {
         this.tblSelectItems = new int[listPacketItems.size()+1][maxPacketWeight+1];
         this.tblAcumuCost = new BigDecimal[listPacketItems.size()+1][maxPacketWeight+1];
         this.tblAcumuWeight = new BigDecimal[listPacketItems.size()+1][maxPacketWeight+1];
+
+        for(int line = 0; line < listPacketItems.size()+1; line++){
+            for(int col = 0; col < maxPacketWeight+1; col++){
+                this.tblAcumuCost[line][col] = new BigDecimal(0);
+                this.tblAcumuWeight[line][col] = new BigDecimal(0);
+            }
+        }
+
     }
 
     /**
@@ -100,12 +108,13 @@ public class Knapsack {
 
         if(maxValWithCurr.compareTo(maxValWithoutCurr) == 1 ){
             tblSelectItems[packetItem.getItemId()][capacity] = 1;
+
             tblAcumuWeight[packetItem.getItemId()][capacity] =
                 tblAcumuWeight[packetItem.getItemId()][capacity].add(
                     tblAcumuWeight[packetItem.getItemId()-1][capacity].add(
                         packetItem.getWeight()));
 
-        } else if(maxValWithCurr == maxValWithoutCurr) {
+        } else if(maxValWithCurr.compareTo(maxValWithoutCurr) == 0) {
             int itemId = packetItem.getItemId();
             while( itemId > 0 && tblSelectItems[itemId][capacity] != 1){
                 itemId--;
@@ -133,7 +142,7 @@ public class Knapsack {
     private BigDecimal calcMaxValWithCurr(final PacketItem packetItem, final int capacity){
         BigDecimal result = new BigDecimal(0);
         int remainingCapacity = 0;
-        if(packetItem.getWeight().compareTo(BigDecimal.valueOf(capacity)) == 1 ||
+        if(packetItem.getWeight().compareTo(BigDecimal.valueOf(capacity)) == -1 ||
             packetItem.getWeight().compareTo(BigDecimal.valueOf(capacity)) == 0){
             result = packetItem.getCost();
             remainingCapacity = calcCapacityRemaining(capacity, packetItem);

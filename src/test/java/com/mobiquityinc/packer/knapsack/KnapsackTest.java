@@ -29,6 +29,35 @@ public class KnapsackTest {
     }
 
     @Test
+    public void caseWeightEqualPacketSizeTest() throws APIException {
+
+
+        List<PacketItem> items = new ArrayList<>();
+        items.add(new PacketItem(1, BigDecimal.valueOf((float)10.00) ,BigDecimal.valueOf((float)79)));
+        items.add(new PacketItem(2, BigDecimal.valueOf((float)81.80),BigDecimal.valueOf((float)45)));
+        items.add(new PacketItem(3, BigDecimal.valueOf((float)0.96),BigDecimal.valueOf((float)79)));
+        items.add(new PacketItem(4, BigDecimal.valueOf((float)1.76),BigDecimal.valueOf((float)64)));
+
+        Knapsack knapsack = new Knapsack(10, items);
+
+        Assert.assertEquals("[3, 4]", knapsack.obtainBetterCombination().toString().trim());
+    }
+
+    @Test
+    public void caseWeightIntValuesTest() throws APIException {
+
+        List<PacketItem> items = new ArrayList<>();
+        items.add(new PacketItem(1, BigDecimal.valueOf((float)5.00) ,BigDecimal.valueOf((float)40)));
+        items.add(new PacketItem(2, BigDecimal.valueOf((float)4.00),BigDecimal.valueOf((float)10)));
+        items.add(new PacketItem(3, BigDecimal.valueOf((float)6.00),BigDecimal.valueOf((float)30)));
+        items.add(new PacketItem(4, BigDecimal.valueOf((float)3.00),BigDecimal.valueOf((float)50)));
+
+        Knapsack knapsack = new Knapsack(10, items);
+
+        Assert.assertEquals("[1, 4]", knapsack.obtainBetterCombination().toString().trim());
+    }
+
+    @Test
     public void caseListItemsTest() throws APIException {
         List<PacketItem> items = new ArrayList<>();
         Knapsack knapsack = new Knapsack(5, items);

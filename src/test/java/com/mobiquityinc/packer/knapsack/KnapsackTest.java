@@ -139,10 +139,29 @@ public class KnapsackTest {
     }
 
     @Test
-    public void casePacketWeightGreaterThan100(){
+    public void casePacketWeightGreaterThan100() throws APIException {
         List<PacketItem> items = new ArrayList<>();
+        items.add(new PacketItem(1, BigDecimal.valueOf((float) 16.36),BigDecimal.valueOf((float)79)));
+        items.add(new PacketItem(2, BigDecimal.valueOf((float) 16.36),BigDecimal.valueOf((float)45)));
+        items.add(new PacketItem(3, BigDecimal.valueOf((float)16.36),BigDecimal.valueOf((float)79)));
+        items.add(new PacketItem(4, BigDecimal.valueOf((float)16.36),BigDecimal.valueOf((float)64)));
         try {
             new Knapsack(1000, items);
+        } catch (APIException e) {
+            Assert.assertEquals(ExceptionMessage.PACKET_WEIGHT.getMessage(), e.getMessage());
+        }
+    }
+
+    @Test
+    public void casePacketWeightLowerThan0() throws APIException {
+
+        List<PacketItem> items = new ArrayList<>();
+        items.add(new PacketItem(1, BigDecimal.valueOf((float) 16.36),BigDecimal.valueOf((float)79)));
+        items.add(new PacketItem(2, BigDecimal.valueOf((float) 16.36),BigDecimal.valueOf((float)45)));
+        items.add(new PacketItem(3, BigDecimal.valueOf((float)16.36),BigDecimal.valueOf((float)79)));
+        items.add(new PacketItem(4, BigDecimal.valueOf((float)16.36),BigDecimal.valueOf((float)64)));
+        try {
+            new Knapsack(-1, items);
         } catch (APIException e) {
             Assert.assertEquals(ExceptionMessage.PACKET_WEIGHT.getMessage(), e.getMessage());
         }

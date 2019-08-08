@@ -50,7 +50,7 @@ public class PacketItemTest {
     @Test
     public void caseValueGreatThan100()  {
         try {
-            new PacketItem(1, new BigDecimal("48.77"),new BigDecimal("-79"));
+            new PacketItem(1, new BigDecimal("48.77"),new BigDecimal("1000"));
         } catch (APIException e) {
             Assert.assertEquals(ExceptionMessage.ITEM_COST.getMessage(), e.getMessage());
         }

@@ -515,9 +515,10 @@ package with the same price.</p>
 <h2 id="_solution">Solution</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The problem described is known as 0-1 Knapsack. There are several viable solutions for it. The adopted one makes use of the dynamic programming technique. The traditional algorithm use items with weight described by integer values, but in our case, the weight must have float values. Due to was required a slight change in the traditional algorithm.
-=== 0-1 Knapsack by Dynamic Programming</p>
+<p>The problem described is known as 0-1 Knapsack. There are several viable solutions for it. The adopted one makes use of the dynamic programming technique. The traditional algorithm use items with weight described by integer values, but in our case, the weight must have float values. Due to was required a slight change in the traditional algorithm.</p>
 </div>
+<div class="sect2">
+<h3 id="_0_1_knapsack_by_dynamic_programming">0-1 Knapsack by Dynamic Programming</h3>
 <div class="paragraph">
 <p>Dynamic Programming Compute the solutions to the sub-sub-problems once and store the answers in a table so that they can be reused (repeatedly) later. Basically, a problem is divided into problems of different sizes. As the minor problems are resolved, the results are used to help solve the larger ones.</p>
 </div>
@@ -877,7 +878,7 @@ TC[i][j] = max(TC[i-1][j], cost(i) + TC[i-1][remaining_capacity])</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code>if TC[i-1][j] &lt; cost(i) + TC[i-1][remaining_capacity]) {
+<pre class="highlight"><code>if TC[i-1][j] &lt; cost(i) + TC[i-1][remaining_capacity] {
     TS[i][j] = 1
     TW[i][j] = TW[i-1][j] + weight(i)
 } else if TC[i-1][j] == cost(i) + TC[i-1][remaining_capacity] {
@@ -887,7 +888,7 @@ TC[i][j] = max(TC[i-1][j], cost(i) + TC[i-1][remaining_capacity])</code></pre>
     }
     if y &gt; 0 and weight(i) &lt; weight(y){
         TS[i][j] = 1
-        TW[i][j] = TW[i-1][j] + weight(i)
+        TW[i][j] = TW[i-1][j] + weight(i) - weight(y)
     } else {
         TS[i][j] = 0
         TW[i][j] = TW[i-1][j]
@@ -1079,13 +1080,14 @@ from item = 4 downto 1{
 }</code></pre>
 </div>
 </div>
+</div>
 <div class="sect2">
 <h3 id="_weight_with_float_value">Weight With Float Value</h3>
 <div class="paragraph">
 <p>With the current structure, we can work smoothly with integer weights, but if the weight is represented by a float, we have a problem with the TC rule. As we need to calculate the remaining capacity when we add an item, this capacity will be a value between two integers which does not allow it to be used as an index in the tables.</p>
 </div>
 <div class="paragraph">
-<p>When subtracting the item&#8217;s weight from capacity we need to pay attention to some details. If the result can be represented by an integer variable, it must be returned normally.Caso o resultado seja float, devemos calcular os valores inteiros anterior e posterior ao resultado, dessa maneira temos acesso a duas configurações diferentes de capacidade uma maior e outrar menor. O próximo passo é verificar se a capacidade restante é maior que o peso de TW[i-1][after]  caso seja, o valor porterior ser utilizado, caso o contrario utilizamos o valor anterior. Follows code representation:</p>
+<p>When subtracting the item&#8217;s weight from capacity we need to pay attention to some details. If the result can be represented by an integer variable, it must be returned normally. If the result is float, we must calculate the integer values before and after the result, in this way we have access to two different capacity configurations one larger and one smaller. The next step is to check if the remaining capacity is greater than the weight of TW [i-1] [after] if the later value is used, otherwise we use the previous value. Follows code representation:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1093,7 +1095,7 @@ from item = 4 downto 1{
 if remaining_capacity is not integer {
     after = int(remaining_capacity + 1)
     before = int(remaining_capacity)
-    if remaining_capacity &gt; TW[item -1][after] {
+    if remaining_capacity &gt;= TW[item -1][after] {
         remaining_capacity = after
     } else {
         remaining_capacity = before
@@ -1108,7 +1110,7 @@ return remaining_capacity</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-07-30 11:42:27 -03
+Last updated 2019-08-08 23:09:09 -03
 </div>
 </div>
 </body>
